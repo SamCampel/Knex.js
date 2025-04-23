@@ -80,10 +80,33 @@ database.where({id : 10}).update({preco: 16.0}).table("produtos").then(data => {
     console.log(data)
 }).catch(err => {
     console.log(err)
-});*/
+});
 
+// order by
 database.select('*').table("produtos").orderBy("preco", "desc").then(data => {
     console.log(data)
 }).catch(err => {
     console.log(err)
 });
+
+// relacionamento entre tabelas
+database.insert({
+    nome: "arrozbom",
+    produto_id: 2
+}).table("marcas").then(data => {
+    console.log(data)
+}).catch(err => {
+    console.log(err)
+});
+
+// join
+// inner join
+
+database.select(["produtos.*", "marcas.nome as nome_da_marca"])
+    .table("produtos").innerJoin("marcas", "produtos.id", "marcas.produto_id")
+        .where("produtos.id",2).then(data => {
+            console.log(data)
+}).catch(err => {    
+    console.log(err)
+});*/
+
