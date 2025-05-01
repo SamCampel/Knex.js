@@ -102,11 +102,86 @@ database.insert({
 // join
 // inner join
 
+// relacionamento 1 para 1
+database.select(["produtos.*", "marcas.nome as nome_da_marca"])
+    .table("produtos").innerJoin("marcas", "produtos.id", "marcas.produto_id")
+       .then(data => {
+            console.log(data)
+}).catch(err => {    
+    console.log(err)
+});
+
 database.select(["produtos.*", "marcas.nome as nome_da_marca"])
     .table("produtos").innerJoin("marcas", "produtos.id", "marcas.produto_id")
         .where("produtos.id",2).then(data => {
             console.log(data)
 }).catch(err => {    
     console.log(err)
-});*/
+});
 
+// relacionamento 1 para N
+// inner join
+database.select(["produtos.*", "marcas.nome as nome_da_marca"]).table("produtos")
+    .innerJoin("marcas", "produtos.id", "marcas.produto_id").then(data => {
+        var marcasProdutosArray = data;
+        var produto = {
+            id: 0,
+            name: "",
+            marcas: []
+        }
+
+        produto.id = data[0].id;
+        produto.name = data[0].name;
+
+        data.forEach(marcas => {
+            produto.marcas.push({ name: marcas.nome_da_marca });
+        });
+        
+        console.log(produto);
+}).catch(err => {    
+    console.log(err)
+});
+
+// relacionamento N para N
+database.select(["produtos.*", "marcas.nome as nome_da_marca"])
+    .table("produtos")
+    .innerJoin("produtos_marcas", "produtos.id", "produtos_marcas.produto_id")
+    .innerJoin("marcas", "marcas.id", "produtos_marcas.marca_id")
+    .then(data => {
+        var produtosMarcasArray = data;
+        var produto = {
+            id: 0,
+            name: "",
+            marcas: []
+        };
+
+        produto.id = data[0].id;
+        produto.name = data[0].name;
+
+        data.forEach(marcas => {
+            produto.marcas.push({ name: marcas.nome_da_marca });
+        });
+
+    console.log(produto);
+}).catch(err => {
+    console.log(err);
+});
+
+//transactions
+
+async function testeTransaction() {
+    
+    try{
+        await database.transaction(async trans => {
+            await database.insert({nome: "FeijaoLegal"}).table("marcas");
+            await database.insert({nome: "MaioneseTOP"}).table("marcas");
+            await database.insert({nome: "FarinhaBENTO"}).table("marcas");
+            await database.insert({nome: "OleodaSOJA"}).table("marcas");
+        });
+    }catch(err) {
+        console.log(err)
+    }
+}
+
+testeTransaction();
+*/
