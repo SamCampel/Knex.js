@@ -33,6 +33,14 @@ O projeto demonstra as seguintes operações com o Knex.js:
 6. **Consultas Aninhadas**:
    - Executar operações dependentes, como inserir um registro e, em seguida, buscar informações relacionadas.
 
+7. **Relacionamentos entre Tabelas**:
+   - **1 para 1**: Relacionar uma tabela com outra diretamente.
+   - **1 para N**: Relacionar uma tabela com várias entradas em outra tabela.
+   - **N para N**: Relacionar múltiplas entradas de uma tabela com múltiplas entradas de outra tabela usando uma tabela intermediária.
+
+8. **Transações**:
+   - Garantir que múltiplas operações sejam executadas de forma atômica.
+
 ## Estrutura do Projeto
 
 - **`index.js`**: Contém os exemplos de operações com o Knex.js.
@@ -76,3 +84,4 @@ O código será atualizado à medida que novos conceitos forem aprendidos.
 ## Referências
 - Documentação do Knex.js
 - Node.js
+- Curso Formação Node.JS - UDEMY
